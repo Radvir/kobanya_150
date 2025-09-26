@@ -1,5 +1,5 @@
 from django.urls import path
-from app_kobanya150.views import index, jelentkezes, leiratkozas, error_response
+from app_kobanya150.views import *
 
 urlpatterns = [
     path('', index, name="kobanya150_index"),
