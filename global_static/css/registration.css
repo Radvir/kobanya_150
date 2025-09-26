@@ -1,0 +1,9 @@
+form{
+    height: 100%;
+}
+form select{
+    width: 70%;
+}
+form button{
+    margin-top: 2em;
+}

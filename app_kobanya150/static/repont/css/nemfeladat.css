@@ -1,0 +1,6 @@
+h1, h2, h3, h4, h5, p, a, footer, .csillagok, td, th {
+    /* Glitch */
+    filter:blur(var(--blur-amount));
+	animation: 5s ease 1000ms normal none infinite running glitch;
+    margin-bottom: 1rem;
+}

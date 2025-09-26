@@ -1,0 +1,33 @@
+main{
+    padding: 2vh 10% 10vh 10%;
+}
+
+header{
+    width: 100%;
+    margin-block: 0;
+    padding-block: .2em;
+    
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: var(--kek) solid 1px;
+}
+header .logo{
+    height: 100px;
+}
+
+@media all and (max-width: 1200px){
+    main{
+        padding: 2vh 7% 10vh 7%;
+    }
+}
+@media all and (max-width: 800px){
+    main{
+        padding: 2vh 5% 10vh 5%;
+    }
+    header .logo {
+        height: 50px;
+    }
+}

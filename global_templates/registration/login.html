@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>A felhasználóneved vagy a jelszavad nem jó. Próbáld újra!</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>A fiókodnak nincs jogosultsága a kért oldal megtekintéséhez. Ha mégis szükséged van az itt található tartalomhoz, jelentkezz be egy olyan fiókkal, amelyik hozzáfér!</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <label for="id_username">Felhasználónév:</label>
+        <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+        <label for="id_password">Jelszó:</label>
+        <input type="password" name="password" autocomplete="current-password" required id="id_password">
+        <button type="submit">Bejelentkezés</button>
+        <a href="{% url 'password_reset' %}">Elfelejtette a jelszavát?</a>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+
+{% endblock %}

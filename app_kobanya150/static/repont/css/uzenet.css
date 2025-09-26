@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+h1{
+    padding: 20px;
+}
+
+h2{
+    display: grid;
+    justify-content: center;
+    margin: 20px 0;
+}
+body{
+    background-color:rgb(5, 24, 25);
+    color:azure;
+    font-family: "Source Code Pro", monospace;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+header{
+    display: grid;
+    justify-content: center;
+}
+
+main{
+    display: grid;
+    justify-content: center;
+}
+
+footer {
+    position: absolute;
+    bottom:20px;
+    width:100%;
+}
+address{
+    display: grid;
+    justify-content: center;
+}
+
+a{
+    color:rgb(155, 229, 102);
+    text-decoration: none;
+    font-style: normal;
+}
+
+a:hover{
+    color:cadetblue;
+    transition:.3s;
+}
+

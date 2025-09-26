@@ -1,0 +1,100 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ title }}</h1>
+    <p>Tanév: {{ current_tanev }}</p>
+    
+    {% if user.is_authenticated %}
+        <p>Üdvözöljük, {{ user.username }}!</p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Bejelentkezés</a> a jelentkezéshez</p>
+    {% endif %}
+    
+    {% if current_week %}
+        <div class="current-week">
+            <h2>Aktuális hét</h2>
+            <p><strong>{{ current_week.hetfoDatum }}</strong></p>
+            <p>Jelentkezettek: 
+                {% for diak in current_week.diakok.all %}
+                    {{ diak.username }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Nincs jelentkező
+                {% endfor %}
+            </p>
+            {% if current_week.bevetel > 0 %}
+                <p>Bevétel: {{ current_week.bevetel }} Ft</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    {% if upcoming_weeks %}
+        <h2>Közelgő hetek</h2>
+        <div class="weeks-list">
+            {% for het in upcoming_weeks %}
+                <div class="week-item">
+                    <h3>{{ het.hetfoDatum }}</h3>
+                    <p>Jelentkezettek: {{ het.diakok.count }}/2</p>
+                    
+                    {% if het.diakok.all %}
+                        <ul>
+                        {% for diak in het.diakok.all %}
+                            <li>{{ diak.username }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
+                    {% if user.is_authenticated %}
+                        {% if user in het.diakok.all %}
+                            <a href="{% url 'leiratkozas' het.id %}" class="btn btn-warning">Leiratkozás</a>
+                        {% elif het.lehet_jelentkezni %}
+                            <a href="{% url 'jelentkezes' het.id %}" class="btn btn-primary">Jelentkezés</a>
+                        {% else %}
+                            <span class="text-muted">Betelt</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Nincsenek elérhető hetek.</p>
+    {% endif %}
+</div>
+
+<style>
+.week-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 5px;
+    text-decoration: none;
+    border-radius: 4px;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.current-week {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}
