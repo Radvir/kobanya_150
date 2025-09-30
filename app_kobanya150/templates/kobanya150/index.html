@@ -29,7 +29,7 @@
                     <form action="lejelentkezes/{{alkalom.id}}/" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                        <button type="submit" class="btn btn-primary">Lejelentkezés</button>
+                        <button type="submit" class="btn btn-primary btn-lejelentkezes">Lejelentkezés</button>
                     </form>
 
                     {% else %}
@@ -37,7 +37,7 @@
                     <form action="atjelentkezes/{{alkalom.id}}/" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                        <button type="submit" class="btn btn-primary">Átjelentkezés</button>
+                        <button type="submit" class="btn btn-primary btn-atjelentkezes">Átjelentkezés</button>
                     </form>
 
                     {% endif %}
@@ -47,7 +47,7 @@
                     <form action="feljelentkezes/{{alkalom.id}}/" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                        <button type="submit" class="btn btn-primary">Feljelentkezés</button>
+                        <button type="submit" class="btn btn-primary btn-feljelentkezes">Feljelentkezés</button>
                     </form>
                 {% endif %}
             </div>
@@ -56,8 +56,8 @@
 </div>
 
 <style>
-.week-item {
-    border: 1px solid #ddd;
+.alkalom-item {
+    border: 2px solid #ddd;
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
@@ -79,6 +79,18 @@
 .btn-warning {
     background-color: #ffc107;
     color: black;
+}
+
+.btn-feljelentkezes {
+    background-color: #007bff;
+}
+
+.btn-lejelentkezes {
+    background-color: #dc3545;
+}
+
+.btn-atjelentkezes {
+    background-color: #28a745;
 }
 
 .current-week {
