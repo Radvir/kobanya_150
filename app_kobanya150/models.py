@@ -7,6 +7,7 @@ import datetime
 # # Models
 
 class kobanya150_Idoszak(models.Model):  # Időszak neve, pl. "Kőbánya 150 - 2023"
+    id = models.AutoField(primary_key=True)
     kezdoDatum = models.DateField()          # Kezdő dátum
     vegDatum = models.DateField()            # Végdátum
 

@@ -1,6 +1,6 @@
 ﻿from django.shortcuts import render, redirect
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from django.http import HttpRequest, HttpResponse
 
@@ -56,3 +56,37 @@ def atjelentkezes(request: HttpRequest, id: int) -> HttpResponse:
 
     return redirect('kobanya150_index')
 
+def jogosult_e(user):
+    return user.groups.filter(name='Kobanya150_kezelo').exists()
+
+
+@user_passes_test(jogosult_e)
+@login_required
+def tablazat(request: HttpRequest) -> HttpResponse:
+    idoszakok = kobanya150_Idoszak.objects.all()
+    context = {
+        'idoszakok': idoszakok,
+    }
+    return render (request, 'kobanya150/tablazat.html', context)
+
+@user_passes_test(jogosult_e)
+@login_required
+def tablazat_idoszak(request: HttpRequest, idoszak_id: int) -> HttpResponse:
+    idoszak = kobanya150_Idoszak.objects.get(id=idoszak_id)
+    alkalmak = kobanya150_Alkalom.objects.filter(idoszak=idoszak).order_by('datum') if idoszak else []
+    context = {
+        'idoszak': idoszak,
+        'alkalmak': alkalmak,
+    }
+    return render (request, 'kobanya150/tablazat_idoszak.html', context)
+
+@user_passes_test(jogosult_e)
+@login_required
+def tablazat_alkalom(request: HttpRequest, idoszak_id: int, alkalom_id:int) -> HttpResponse:
+    idoszak = kobanya150_Idoszak.objects.get(id=idoszak_id)
+    alkalom = kobanya150_Alkalom.objects.get(id=alkalom_id)
+    context = {
+        'idoszak': idoszak,
+        'alkalom': alkalom,
+    }
+    return render (request, 'kobanya150/tablazat_alkalom.html', context)
