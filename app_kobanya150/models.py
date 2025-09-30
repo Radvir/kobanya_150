@@ -20,6 +20,7 @@ class kobanya150_Idoszak(models.Model):  # Időszak neve, pl. "Kőbánya 150 - 2
 
 
 class kobanya150_Alkalom(models.Model):
+    id = models.AutoField(primary_key=True)
     datum = models.DateField()
     ido_kezdes = models.TimeField(default=datetime.time(0, 0))
     ido_vege = models.TimeField(default=datetime.time(0, 0))
@@ -41,7 +42,7 @@ class kobanya150_Alkalom(models.Model):
             return True
         return False
     
-    def lemondas(self, felhasznalo: User):
+    def lejelentkezes(self, felhasznalo: User):
         if self.jelentkezok.filter(id=felhasznalo.id).exists():
             self.jelentkezok.remove(felhasznalo)
             return True

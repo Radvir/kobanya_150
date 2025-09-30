@@ -3,7 +3,8 @@ from app_kobanya150.views import *
 
 urlpatterns = [
     path('', index, name="kobanya150_index"),
-    # path('jelentkezes/<int:het_id>/', jelentkezes, name="jelentkezes"),
-    # path('leiratkozas/<int:het_id>/', leiratkozas, name="leiratkozas"),
+    path('feljelentkezes/<int:id>/', feljelentkezes, name="feljelentkezes"),
+    path('lejelentkezes/<int:id>/', lejelentkezes, name="lejelentkezes"),
+    path('atjelentkezes/<int:id>/', atjelentkezes, name="atjelentkezes"),
     # path('error/', error_response, name="error_response"),
 ]
