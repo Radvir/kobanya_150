@@ -18,7 +18,7 @@ import datetime
 
 def index(request: HttpRequest) -> HttpResponse:
     idoszak = kobanya150_Idoszak.objects.all().order_by('-kezdoDatum').first()
-    alkalmak = kobanya150_Alkalom.objects.filter(idoszak=idoszak).order_by('datum') if idoszak else []
+    alkalmak = kobanya150_Alkalom.objects.filter(idoszak=idoszak).order_by('datum', 'ido_kezdes') if idoszak else []
     is_in_any = kobanya150_Alkalom.objects.filter(jelentkezok=request.user).exists()
     context = {
 

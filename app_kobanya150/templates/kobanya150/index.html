@@ -21,7 +21,7 @@
             <div class="alkalom-item">
                 <p><strong>Dátum:</strong> {{ alkalom.datum }}</p>
                 <p>{{alkalom.ido_kezdes}}-{{alkalom.ido_vege}}</p>
-                <p><strong>Jelentkezők száma:</strong> {{ alkalom.jelentkezok.count }}</p>
+                <p><strong>Jelentkezők száma:</strong> {{ alkalom.jelentkezok.count }}/{{ alkalom.max_letszam }}</p>
                 {% if is_in_any %}
                     {% if user in alkalom.jelentkezok.all %}
                     {% comment %} Lejelentkezés {% endcomment %}
