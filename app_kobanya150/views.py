@@ -25,6 +25,4 @@ def index(request: HttpRequest) -> HttpResponse:
         'alkalmak': alkalmak,
 
     }
-    render(request, 'kobanya150/index.html', context)
-    
-
+    return render(request, 'kobanya150/index.html', context)

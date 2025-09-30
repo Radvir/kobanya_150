@@ -1,0 +1,17 @@
+SECRET_KEY = 'tokmindegy_mert_devserver'
+DEBUG = True
+MELYIK = 'asztali'
+EZ_AZ_IP = '127.0.0.1'
+ORIGIN_IP = 'http://127.0.0.1'
+DB_NAME = 'myproject'
+DB_USER = 'myprojectuser'
+DB_PASSWORD = 'nincs jelentosege'
+DB_HOST = 'localhost'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'egy_gmailes_email_de_nem@szlgbp.hu'
+EMAIL_HOST_PASSWORD = 'alkalmazasjelszavad_amit_beallitottal_hozza'
+DEFAULT_FROM_EMAIL = 'egy_gmailes_email_de_nem@szlgbp.hu'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+GITHUB_KEY = 'ha kell'
+FOGLALKOZASVALASZTO_REALTIME_ENGED = True
