@@ -39,7 +39,7 @@ class kobanya150_Alkalom(models.Model):
 
     
     def jelentkezes(self, felhasznalo: User):
-        if not self.jelentkezok.filter(id=felhasznalo.id).exists():
+        if not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
             self.jelentkezok.add(felhasznalo)
             return True
         return False
@@ -52,9 +52,9 @@ class kobanya150_Alkalom(models.Model):
     
     def atjelentkezes(self, felhasznalo: User):
         for alkalom in kobanya150_Alkalom.objects.filter(idoszak=self.idoszak):
-            if alkalom.jelentkezok.filter(id=felhasznalo.id).exists():
+            if alkalom.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
                 alkalom.jelentkezok.remove(felhasznalo)
-        if not self.jelentkezok.filter(id=felhasznalo.id).exists():
+        if not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
             self.jelentkezok.add(felhasznalo)
             return True
         return False
