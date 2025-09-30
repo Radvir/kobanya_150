@@ -21,30 +21,34 @@
             <div class="alkalom-item">
                 <p><strong>Dátum:</strong> {{ alkalom.datum }}</p>
                 <p>{{alkalom.ido_kezdes}}-{{alkalom.ido_vege}}</p>
+                <p><strong>Jelentkezők száma:</strong> {{ alkalom.jelentkezok.count }}</p>
                 {% if is_in_any %}
                     {% if user in alkalom.jelentkezok.all %}
                     {% comment %} Lejelentkezés {% endcomment %}
+
                     <form action="lejelentkezes/{{alkalom.id}}/" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                    <button type="submit" class="btn btn-primary">Lejelentkezés</button>
-                </form>
-                </form>
+                        {% csrf_token %}
+                        <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
+                        <button type="submit" class="btn btn-primary">Lejelentkezés</button>
+                    </form>
+
                     {% else %}
+
                     <form action="atjelentkezes/{{alkalom.id}}/" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                    <button type="submit" class="btn btn-primary">Átjelentkezés</button>
-                </form>
+                        {% csrf_token %}
+                        <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
+                        <button type="submit" class="btn btn-primary">Átjelentkezés</button>
+                    </form>
+
                     {% endif %}
                     
-                {% else %}
-                <!--Feljelentkezés-->    
-                <form action="feljelentkezes/{{alkalom.id}}/" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                    <button type="submit" class="btn btn-primary">Feljelentkezés</button>
-                </form>
+                    {% else %}
+                    <!--Feljelentkezés-->    
+                    <form action="feljelentkezes/{{alkalom.id}}/" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
+                        <button type="submit" class="btn btn-primary">Feljelentkezés</button>
+                    </form>
                 {% endif %}
             </div>
         {% endfor %}
