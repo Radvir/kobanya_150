@@ -10,21 +10,27 @@ from django.contrib import messages
 
 import datetime
 
-
+from datetime import date
 
 # Create your views here.
 
+def jogosult_e(user):
+    return user.groups.filter(name='Kobanya150_kezelo').exists()
 
 @login_required(login_url='login')
 def index(request: HttpRequest) -> HttpResponse:
     idoszak = kobanya150_Idoszak.objects.all().order_by('-kezdoDatum').first()
     alkalmak = kobanya150_Alkalom.objects.filter(idoszak=idoszak).order_by('datum', 'ido_kezdes') if idoszak else []
     is_in_any = kobanya150_Alkalom.objects.filter(jelentkezok=request.user).exists()
+    jogosultsag = jogosult_e(request.user)
+    mai_datum = date.today()
     context = {
 
         'idoszak': idoszak,
         'alkalmak': alkalmak,
         'is_in_any': is_in_any,
+        'jogosult_e': jogosultsag,
+        'mai_datum': mai_datum,
 
     }
     return render(request, 'kobanya150/index.html', context)
@@ -56,8 +62,6 @@ def atjelentkezes(request: HttpRequest, id: int) -> HttpResponse:
 
     return redirect('kobanya150_index')
 
-def jogosult_e(user):
-    return user.groups.filter(name='Kobanya150_kezelo').exists()
 
 
 @user_passes_test(jogosult_e)
