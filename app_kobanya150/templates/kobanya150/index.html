@@ -14,8 +14,28 @@
     {% endif %}
     <div class="alkalom-list">
         
+        {% if jogosult_e %}
+            <form action="tablazat/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tablazat">
+                <button type="submit" class="btn btn-primary">Táblázatok lekérdezése</button>
+            </form>        
+        {% endif %}
+
         <h2>Jelenlegi Időszak</h2>
         
+        {% if mai_datum < idoszak.kezdoDatum %} 
+        <p>Még nem kezdődött el a jelentkezési szakasz.</p>
+        {% endif %}
+        {% if idoszak.vegDatum < mai_datum %}
+        <p>Már lejárt a jelentkezési szakasz.</p>
+        {% endif %}
+        {% if idoszak.kezdoDatum <= mai_datum and mai_datum <= idoszak.vegDatum%}
+        <p>Most lehet jelentkezni</p>
+        {% else %}
+        
+        <p>Most nem lehet jelentkezni</p>
+        {% endif %}
 
         {% for alkalom in alkalmak %}
             <div class="alkalom-item">
@@ -24,15 +44,20 @@
                 <p><strong>Jelentkezők száma:</strong> {{ alkalom.jelentkezok.count }}/{{ alkalom.max_letszam }}</p>
                 {% if is_in_any %}
                     {% if user in alkalom.jelentkezok.all %}
-                    {% comment %} Lejelentkezés {% endcomment %}
-                    <form action="lejelentkezes/{{alkalom.id}}/" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                        <button type="submit" class="btn btn-primary btn-lejelentkezes">Lejelentkezés</button>
-                    </form>
-
+                        {% if idoszak.kezdoDatum <= mai_datum and mai_datum <= idoszak.vegDatum%}
+            
+                            <form action="lejelentkezes/{{alkalom.id}}/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
+                                <button type="submit" class="btn btn-primary btn-lejelentkezes">Lejelentkezés</button>
+                            </form>
+                        {% else %}
+                            <p></p>
+                        {% endif %}
+                    
                     {% else %}
 
+                    {% if idoszak.kezdoDatum <= mai_datum and mai_datum <= idoszak.vegDatum%}
                         {% if alkalom.jelentkezok.count < alkalom.max_letszam %}
                             <form action="atjelentkezes/{{alkalom.id}}/" method="post">
                                 {% csrf_token %}
@@ -42,21 +67,30 @@
                         {% else %}
                             <span class="full">Ez az alkalom betelt</span>
                         {% endif %}
-
+                        
+                        {% else %}
+                        <p></p>
+                        {% endif %}
                     {% endif %}
                     
                     {% else %}
-                        {% if alkalom.jelentkezok.count < alkalom.max_letszam %}
-                            <!--Feljelentkezés-->    
-                            <form action="feljelentkezes/{{alkalom.id}}/" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
-                                <button type="submit" class="btn btn-primary btn-feljelentkezes">Feljelentkezés</button>
-                            </form>
-                        {% else %}
-                            <span class="full">Ez az alkalom betelt</span>
-                        {% endif %} 
+                        {% if idoszak.kezdoDatum <= mai_datum and mai_datum <= idoszak.vegDatum%}
 
+                            {% if alkalom.jelentkezok.count < alkalom.max_letszam %}
+                                <!--Feljelentkezés-->    
+                                <form action="feljelentkezes/{{alkalom.id}}/" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
+                                    <button type="submit" class="btn btn-primary btn-feljelentkezes">Feljelentkezés</button>
+                                </form>
+                            {% else %}
+                                <span class="full">Ez az alkalom betelt</span>
+                            {% endif %} 
+                            
+                            {% else %}
+                            <p></p>
+                        
+                        {% endif %}
                 {% endif %}
             </div>
         {% endfor %}
@@ -91,6 +125,14 @@
     margin: 10px 0;
     border-radius: 5px;
 
+}
+
+button a:hover{
+    color: white;
+}
+
+.alkalom-item a{
+    align-self: center;
 }
 
 .btn {

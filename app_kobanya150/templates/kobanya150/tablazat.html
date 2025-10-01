@@ -18,13 +18,16 @@
         <a href="../">Vissza</a>
         
         {% for idoszak in idoszakok %}
-        <p>{{idoszak.kezdoDatum}} - {{idoszak.vegDatum}} jelentkezési időszak</p>
-        <form action="{{idoszak.id}}/" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="idoszak_id" value="{{ idoszak.id }}">
-            <button type="submit" class="btn btn-primary">Lekérdezés</button>
-        </form>
-        {% endfor %}
+        <div class="alkalom-item">
+
+            <p>{{idoszak.kezdoDatum}} - {{idoszak.vegDatum}} jelentkezési időszak</p>
+            <form action="{{idoszak.id}}/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="idoszak_id" value="{{ idoszak.id }}">
+                <button type="submit" class="btn btn-primary">Lekérdezés</button>
+            </form>
+        </div>
+            {% endfor %}
     </div>
 </div>
 
@@ -35,6 +38,21 @@
     margin: 10px 0;
     border-radius: 5px;
 }
+
+.alkalom-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.alkalom-item {
+    border: 2px solid #ddd;
+    padding: 30px;
+    margin: 10px 0;
+    border-radius: 5px;
+
+}
+
 
 .btn {
     display: inline-block;

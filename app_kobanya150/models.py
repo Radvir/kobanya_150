@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from datetime import date
 
 # Create your models here.
 
@@ -39,22 +40,23 @@ class kobanya150_Alkalom(models.Model):
 
     
     def jelentkezes(self, felhasznalo: User):
-        if not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
+        
+        if date.today() <= self.idoszak.vegDatum and not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
             self.jelentkezok.add(felhasznalo)
             return True
         return False
     
     def lejelentkezes(self, felhasznalo: User):
-        if self.jelentkezok.filter(id=felhasznalo.id).exists():
+        if date.today() <= self.idoszak.vegDatum and self.jelentkezok.filter(id=felhasznalo.id).exists():
             self.jelentkezok.remove(felhasznalo)
             return True
         return False
     
     def atjelentkezes(self, felhasznalo: User):
         for alkalom in kobanya150_Alkalom.objects.filter(idoszak=self.idoszak):
-            if alkalom.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
+            if date.today() <= self.idoszak.vegDatum and alkalom.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
                 alkalom.jelentkezok.remove(felhasznalo)
-        if not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
+        if date.today() <= self.idoszak.vegDatum and not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
             self.jelentkezok.add(felhasznalo)
             return True
         return False
