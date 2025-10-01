@@ -22,7 +22,7 @@
             </form>        
         {% endif %}
 
-        <h2>Jelenlegi Időszak</h2>
+        <h2>Jelenlegi időszak</h2>
         
         {% if mai_datum < idoszak.kezdoDatum %} 
         <p>Még nem kezdődött el a jelentkezési szakasz.</p>
@@ -31,10 +31,10 @@
         <p>Már lejárt a jelentkezési szakasz.</p>
         {% endif %}
         {% if idoszak.kezdoDatum <= mai_datum and mai_datum <= idoszak.vegDatum%}
-        <p>Most lehet jelentkezni</p>
+        <p>Most lehet jelentkezni.</p>
         {% else %}
         
-        <p>Most nem lehet jelentkezni</p>
+        <p>Most nem lehet jelentkezni.</p>
         {% endif %}
 
         {% for alkalom in alkalmak %}
