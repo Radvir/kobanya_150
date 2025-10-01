@@ -15,7 +15,7 @@ import datetime
 # Create your views here.
 
 
-
+@login_required(login_url='login')
 def index(request: HttpRequest) -> HttpResponse:
     idoszak = kobanya150_Idoszak.objects.all().order_by('-kezdoDatum').first()
     alkalmak = kobanya150_Alkalom.objects.filter(idoszak=idoszak).order_by('datum', 'ido_kezdes') if idoszak else []
