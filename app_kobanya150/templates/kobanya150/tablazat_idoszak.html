@@ -18,15 +18,17 @@
         <a href="../">Vissza</a>
         
         {% for alkalom in alkalmak %}
+        <div class="alkalom-item">
             <p><strong>Dátum:</strong> {{ alkalom.datum }}</p>
             <p>{{alkalom.ido_kezdes}}-{{alkalom.ido_vege}}</p>
             <p><strong>Jelentkezők száma:</strong> {{ alkalom.jelentkezok.count }}</p>
-
+            
             <form action="{{alkalom.id}}/" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="alkalom_id" value="{{ alkalom.id }}">
                 <button type="submit" class="btn btn-primary">Lekérdezés</button>
             </form>
+        </div>
         {% endfor %}
     </div>
 </div>
@@ -37,6 +39,20 @@
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
+}
+
+.alkalom-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.alkalom-item {
+    border: 2px solid #ddd;
+    padding: 30px;
+    margin: 10px 0;
+    border-radius: 5px;
+
 }
 
 .btn {
