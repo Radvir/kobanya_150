@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 import datetime
 from datetime import date
 
@@ -43,12 +43,18 @@ class kobanya150_Alkalom(models.Model):
         
         if date.today() <= self.idoszak.vegDatum and not self.jelentkezok.filter(id=felhasznalo.id).exists() and (self.jelentkezok.count() < self.max_letszam):
             self.jelentkezok.add(felhasznalo)
+
+            group, _ = Group.objects.get_or_create(name='kobanya150_jelentkezo')
+            if group not in felhasznalo.groups.all():
+                felhasznalo.groups.add(group)
+
             return True
         return False
     
     def lejelentkezes(self, felhasznalo: User):
         if date.today() <= self.idoszak.vegDatum and self.jelentkezok.filter(id=felhasznalo.id).exists():
             self.jelentkezok.remove(felhasznalo)
+
             return True
         return False
     
