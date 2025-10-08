@@ -40,7 +40,7 @@ class Command(BaseCommand):
 def generate_random_string(length=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
-def create_random_users(n):
+def create_random_users(n=100):
     for i in range(n):
         username = f"user_{generate_random_string(6)}"
         password = generate_random_string(10)
@@ -53,6 +53,6 @@ def create_random_users(n):
                 first_name=first_name,
                 last_name=last_name
             )
-            print(f"Created: {username} / {password} / {first_name} {last_name}")
+            print(f"✅ Created: {username} / {password} / {first_name} {last_name}")
         else:
-            print(f"Skipped (already exists): {username}")
+            print(f"❌ Skipped (already exists): {username}")
