@@ -7,8 +7,9 @@ admin.site.register(kobanya150_Idoszak)
 class kobanya150_AlkalomAdmin(admin.ModelAdmin):
     filter_horizontal = ('jelentkezok',)
     list_per_page = 200
-    actions = ['add_jelentkezok_to_group']
+    actions = ['add_jelentkezok_to_group', 'delete_selected_users']
 
+    @admin.action(description="addd group")
     def add_jelentkezok_to_group(self, request, queryset):
         group, _ = Group.objects.get_or_create(name='kobanya150_jelentkezo')
         count = 0
@@ -23,11 +24,10 @@ class kobanya150_AlkalomAdmin(admin.ModelAdmin):
 
     add_jelentkezok_to_group.short_description = "Jelentkezők hozzáadása a kobanya150_jelentkezo csoporthoz"
     
-    actions = ['delete_selected_users']
-    
     @admin.action(description="❌ Delete selected users from this Alkalom (and database)")
     def delete_selected_users(self, request, queryset):
         filter_horizontal = ('jelentkezok',)
+        group = Group.objects.get(name="kobanya150_jelentkezo")
         deleted_count = 0
 
         for alkalom in queryset:
